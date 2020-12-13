@@ -1,0 +1,32 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    container_name: 'node-app'
+    command: sh -c "npm run typeorm migration:run && npm run dev:server"
+    ports:
+      - 3333:3333
+    volumes:
+      - .:/usr/app
+    links:
+      - db
+    depends_on:
+      - db
+    environment:
+      DB_HOST: ${DATABASE_HOST}
+      DB_USER: ${DATABASE_USER}
+      DB_PASS: ${DATABASE_PASSWORD}
+      DB_NAME: ${DATABASE_NAME}
+  db:
+    image: postgres:alpine
+    container_name: node-db
+    ports:
+      - '5432:5432'
+    environment:
+      - POSTGRES_USER=${DATABASE_USER}
+      - POSTGRES_PASSWORD=${DATABASE_PASSWORD}
+      - POSTGRES_NAME=${DATABASE_NAME}
+      - POSTGRES_HOST=${DATABASE_HOST}
+networks:
+  overlay:
