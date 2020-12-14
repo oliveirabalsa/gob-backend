@@ -1,32 +1,15 @@
-import { Repository } from 'typeorm';
-import Appointment from '../models/Appointment.model';
+import { EntityRepository, Repository } from 'typeorm';
 
-class AppointmentsRepository {
-  // eslint-disable-next-line no-useless-constructor
-  constructor(
-    private readonly appointmentRepository: Repository<Appointment>,
-  ) {}
+import Appoitment from '../models/Appointment.model';
 
-  // private appointments: Appointment[];
-
-  public async all(): Promise<Appointment[]> {
-    return this.appointmentRepository.find();
-  }
-
-  public async findByDate(date: Date): Promise<Appointment> {
-    const appointments: any = await this.appointmentRepository.find({
+@EntityRepository(Appoitment)
+class AppointmentsRepository extends Repository<Appoitment> {
+  public async findByDate(date: Date): Promise<Appoitment | null> {
+    const findAppointment = await this.findOne({
       where: { date },
     });
-    return appointments;
-  }
 
-  public async create({ provider_id, date }: Appointment): Promise<void> {
-    const createAppointment = this.appointmentRepository.create({
-      provider_id,
-      date,
-    });
-
-    await this.appointmentRepository.save(createAppointment);
+    return findAppointment || null;
   }
 }
 

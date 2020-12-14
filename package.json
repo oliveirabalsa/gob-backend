@@ -12,6 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/bcryptjs": "^2.4.2",
+    "bcryptjs": "^2.4.3",
     "date-fns": "^2.16.1",
     "express": "^4.17.1",
     "pg": "^8.5.1",
