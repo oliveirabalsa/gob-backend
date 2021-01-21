@@ -1,5 +1,5 @@
 import { Request, Response } from 'express';
-import CreateUserService from '../services/CreateUserService';
+import CreateUserService from '../modules/users/services/CreateUserService';
 
 interface UserCreated {
   name: string;
