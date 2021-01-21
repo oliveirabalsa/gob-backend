@@ -1,6 +1,11 @@
 import { Request, Response } from 'express';
 import CreateUserService from '../services/CreateUserService';
 
+interface UserCreated {
+  name: string;
+  email: string;
+  password?: string;
+}
 class UserController {
   public async createUser(request: Request, response: Response): Promise<any> {
     try {
@@ -8,7 +13,11 @@ class UserController {
 
       const createUser = new CreateUserService();
 
-      const user = await createUser.execute({ name, email, password });
+      const user: UserCreated = await createUser.execute({
+        name,
+        email,
+        password,
+      });
 
       delete user.password;
 
