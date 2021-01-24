@@ -1,30 +1,33 @@
+import UsersRepository from '@modules/users/typeorm/repositories/UsersRepository';
 import { Request, Response } from 'express';
 import CreateUserService from '../modules/users/services/CreateUserService';
 
-interface UserCreated {
+interface ICreatedUser {
   name: string;
   email: string;
   password?: string;
 }
+
 class UserController {
-  public async createUser(request: Request, response: Response): Promise<any> {
-    try {
-      const { name, email, password } = request.body;
+  public async createUser(
+    request: Request,
+    response: Response,
+  ): Promise<Response> {
+    const usersRepository = new UsersRepository();
 
-      const createUser = new CreateUserService();
+    const { name, email, password } = request.body;
 
-      const user: UserCreated = await createUser.execute({
-        name,
-        email,
-        password,
-      });
+    const createUser = new CreateUserService(usersRepository);
 
-      delete user.password;
+    const user: ICreatedUser = await createUser.execute({
+      name,
+      email,
+      password,
+    });
 
-      return await response.status(200).json(user);
-    } catch (err) {
-      return response.status(400).json({ error: err.message });
-    }
+    delete user.password;
+
+    return await response.status(200).json(user);
   }
 }
 

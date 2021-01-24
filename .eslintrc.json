@@ -21,6 +21,7 @@
     "rules": {
       "class-methods-use-this":"off",
       "camelcase": "off",
+      "no-useless-constructor": "off",
       "no-restricted-syntax": "off",
       "@typescript-eslint/no-unused-vars": ["error",{
         "argsIgnorePattern": "_"
