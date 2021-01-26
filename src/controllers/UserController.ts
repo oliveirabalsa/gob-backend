@@ -1,4 +1,4 @@
-import UsersRepository from '@modules/users/typeorm/repositories/UsersRepository';
+import { container } from 'tsyringe';
 import { Request, Response } from 'express';
 import CreateUserService from '../modules/users/services/CreateUserService';
 
@@ -13,11 +13,9 @@ class UserController {
     request: Request,
     response: Response,
   ): Promise<Response> {
-    const usersRepository = new UsersRepository();
-
     const { name, email, password } = request.body;
 
-    const createUser = new CreateUserService(usersRepository);
+    const createUser = container.resolve(CreateUserService);
 
     const user: ICreatedUser = await createUser.execute({
       name,

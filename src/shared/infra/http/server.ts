@@ -1,8 +1,10 @@
 import express from 'express';
 import 'express-async-errors';
+import 'reflect-metadata';
 
 import uploadConfig from '@config/upload';
 import routes from './routes/index';
+import '@shared/container';
 
 import GlobalError from '../../errors/GlobalError';
 
