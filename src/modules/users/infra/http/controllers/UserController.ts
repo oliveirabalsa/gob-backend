@@ -1,6 +1,6 @@
 import { container } from 'tsyringe';
 import { Request, Response } from 'express';
-import CreateUserService from '../modules/users/services/CreateUserService';
+import CreateUserService from '@modules/users/services/CreateUserService';
 
 interface ICreatedUser {
   name: string;
@@ -9,10 +9,7 @@ interface ICreatedUser {
 }
 
 class UserController {
-  public async createUser(
-    request: Request,
-    response: Response,
-  ): Promise<Response> {
+  public async create(request: Request, response: Response): Promise<Response> {
     const { name, email, password } = request.body;
 
     const createUser = container.resolve(CreateUserService);
@@ -29,4 +26,4 @@ class UserController {
   }
 }
 
-export default UserController;
+export default new UserController();
